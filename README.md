@@ -1,7 +1,18 @@
 # FinBridge
 ### India's Unified Investment Intelligence Platform
 
-**Developed by Team investIQ**
+<div align="left">
+  <img src="https://img.shields.io/badge/Developed%20By-Team%20investIQ-blue?style=for-the-badge&logo=github" alt="Team investIQ" />
+  <img src="https://img.shields.io/badge/Vite-6.x-blueviolet?style=for-the-badge&logo=vite" alt="Vite Version" />
+  <img src="https://img.shields.io/badge/React-19.x-blue?style=for-the-badge&logo=react" alt="React Version" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript" alt="TypeScript Version" />
+</div>
+
+<div align="left">
+  <img src="https://img.shields.io/badge/SEBI--Compliance-Exempt--Educational-emerald?style=flat-square" alt="SEBI Status" />
+  <img src="https://img.shields.io/badge/Consent--Protocol-Account--Aggregator-blue?style=flat-square" alt="AA Protocol" />
+  <img src="https://img.shields.io/badge/Data--Security-AES--256-brightgreen?style=flat-square" alt="Encryption" />
+</div>
 
 > **One Identity. Every Investment. Institutional-Grade Clarity for Retail India.**
 >
@@ -36,6 +47,16 @@ FinBridge resolves these gaps by combining portfolio aggregation, dynamic risk e
 * **Suitability-First Alternate Asset Discovery**: Profiles the investor first (age, income, horizon, risk tolerance, goals) and only then displays matched alternative assets (REITs, InvITs, bonds) with plain-language suitability match percentages, taxation rules, and lock-in explanations to prevent mis-selling.
 * **Autonomous AI Agent Workspace**: A sandboxed area allowing users to deploy, monitor, and configure active financial loops. This includes a **Portfolio Rebalancer** that aligns assets to target risk metrics, a **Tax-Loss Harvesting Bot** that books capital losses to offset short-term capital gains tax while swapping assets to avoid wash-sales, and **Natural Language Guardrails** that translate plain-English rules into background monitors.
 * **Plain-English Wealth Academy & Chat Advisor**: An interactive chatbot backed by Gemini-3.5-flash that answers user queries on alternative assets and compares products side-by-side (e.g., *ETFs vs. Mutual Funds*, *REITs vs. Physical Housing*).
+
+### ⚔️ Industry Contrast Matrix
+
+| Traditional Aggregators / Individual Brokers | FinBridge Unified Experience |
+| :--- | :--- |
+| ❌ **Siloed Exposure Views**: Zerodha, Groww, and Upstox operate as blind silos, unaware of external holding balances. | 🌐 **Consolidated Portfolio Intel**: Automatically maps, normalizes, and groups assets across all demat accounts. |
+| ❌ **Hidden Concentration Risks**: Sector exposure is calculated per broker, masking dangerous combined asset allocations. | 🚨 **Cross-Broker Warnings**: Computes overall sector weights and triggers alerts for hidden sector overlaps. |
+| ❌ **Product Catalog Spams**: Promotes alternative assets directly to retail users without suitability or knowledge checks. | 🧬 **Suitability-First Recommendations**: Profiles age, horizon, risk, and goals before displaying matching alternate assets. |
+| ❌ **Comprehension Lag**: Uses complex prospectuses, leaving retail investors vulnerable to mis-selling. | 📖 **Plain-English Wealth Academy**: Simplifies mechanics, taxation, and liquidity rules in simple language. |
+| ❌ **Manual Allocation & Harvest Math**: Forces investors to manually calculate rebalancing amounts and tax-loss offsets. | 🤖 **Autonomous AI Workspace**: Deploys rebalancing, tax-loss harvesting, and NLP guardrail agents. |
 
 ---
 
