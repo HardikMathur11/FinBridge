@@ -1,0 +1,6 @@
+{
+  "name": "FinBridge",
+  "description": "An intuitive, accessible, and high-fidelity portfolio dashboard with real-time asset allocation tracking, financial health diagnostics, broker aggregation, and secure AI-driven portfolio insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
