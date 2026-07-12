@@ -148,7 +148,7 @@ The repository represents a clean, production-ready React web interface powered 
 
 ---
 
-## 🚀 Running the Sandbox Prototype Locally
+## 🚀 Running the Sandbox Application Locally
 
 To run the application sandbox and explore the unified portfolio dashboard, suitability engine, and autonomous agents:
 
