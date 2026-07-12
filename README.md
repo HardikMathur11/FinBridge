@@ -100,8 +100,8 @@ graph LR
     Start([User opens Discovery tab]) --> Profile[Fill Suitability Profiler: Age, Income, Horizon, Risk Appetite, Goal]
     Profile --> Score[Scoring Engine calculates matches against REITs, InvITs, and Bonds]
     Score --> Filter{Check Risk Appetite & Horizon}
-    Filter -->|Low Horizon / High Risk| MatchA[REITs: Match 65% | SGBs: Match 50% | NHAI Bonds: Match 95%]
-    Filter -->|High Horizon / High Risk| MatchB[REITs: Match 95% | InvITs: Match 85% | NHAI Bonds: Match 55%]
+    Filter -->|Low Horizon / High Risk| MatchA["REITs: Match 65% • SGBs: Match 50% • NHAI Bonds: Match 95%"]
+    Filter -->|High Horizon / High Risk| MatchB["REITs: Match 95% • InvITs: Match 85% • NHAI Bonds: Match 55%"]
     Score --> Explainer[Generate Plain-English Explanation & Taxation Breakdown]
     Explainer --> Render[Display Custom Recommendation Cards]
 ```
@@ -221,5 +221,5 @@ FinBridge is an educational and analytical platform designed to enhance financia
 ---
 
 <p align="center">
-  Built with 💙 by <b>Team investIQ</b>
+  Built by <b>Team investIQ</b>
 </p>
