@@ -5,7 +5,7 @@
 
 > **One Identity. Every Investment. Institutional-Grade Clarity for Retail India.**
 >
-> *Developed for Hackathon Problem Statement 3: Super App for Unified Multi Asset Investing and Awareness for Retail Investors.*
+> *Focus Area: Super App for Unified Multi-Asset Investing and Financial Awareness for Retail Investors*
 
 ---
 
@@ -208,3 +208,18 @@ To run the application sandbox and explore the unified portfolio dashboard, suit
 
 5. **Access the App**
    * Open your web browser and navigate to: **`http://localhost:3000`**
+
+---
+
+## ⚖️ Disclaimer & Compliance
+
+FinBridge is an educational and analytical platform designed to enhance financial literacy and showcase dynamic multi-broker risk consolidation. 
+* **No Direct Solicitation**: This platform displays investment options (REITs, InvITs, and bonds) with objective, plain-language suitability details and Indian taxation breakdowns for educational purposes. It does not provide direct buy/sell advisories or execute transactions.
+* **SEBI Compliance**: Under SEBI (Investment Advisers) Regulations, 2013, FinBridge operates as an educational suitability screener rather than an active advisory service. For real market execution, the system is designed to integrate with SEBI-Registered Investment Advisers (RIAs).
+* **Data Security**: All statements are fetched securely, utilizing sandboxed Account Aggregator models. Consent is revocable, purpose-limited, and data-blind in transit.
+
+---
+
+<p align="center">
+  Built with 💙 by <b>Team investIQ</b>
+</p>
