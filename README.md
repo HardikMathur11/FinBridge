@@ -20,7 +20,7 @@
 India's retail investors face two compounding barriers that limit effective participation in securities markets:
 
 1. **Fragmented Visibility**: Retail holdings are scattered across multiple brokers (Zerodha, Groww, Upstox, Angel One), depositories (NSDL, CDSL), and diverse asset classes. Investors lack a single consolidated view of their total holdings, exposure, and combined risk. While frameworks like the Account Aggregator (AA) and NSDL-CDSL Unified Investor Platform provide data-access plumbing, no integrated solution turns this data into unified, actionable portfolio intelligence.
-2. **Shallow Alternate-Asset Access & Comprehension Lag**: Retail participation is heavily skewed towards equities and mutual funds. New instruments like REITs, InvITs, and corporate bonds are regularly introduced but remain under-discovered and under-explained, creating severe risks of mis-selling and unsuitable investment choices due to the lag between product innovation and investor comprehension.
+2. **Shallow Alternate-Asset Access & Comprehension Lag**: Retail participation is heavily skewed towards equities and mutual funds. New instruments like REITs, InvITs, and corporate bonds are regularly introduced but remain under-discovered and under-explained, creating severe risks of mis-selling and unsuitable investment decisions due to the lag between product innovation and investor comprehension.
 
 These gaps result in an opaque and inequitable investing experience where sophisticated portfolio diagnostics and multi-asset discovery remain accessible only to institutional and high-net-worth (HNW) investors.
 
@@ -36,6 +36,75 @@ FinBridge resolves these gaps by combining portfolio aggregation, dynamic risk e
 * **Suitability-First Alternate Asset Discovery**: Profiles the investor first (age, income, horizon, risk tolerance, goals) and only then displays matched alternative assets (REITs, InvITs, bonds) with plain-language suitability match percentages, taxation rules, and lock-in explanations to prevent mis-selling.
 * **Autonomous AI Agent Workspace**: A sandboxed area allowing users to deploy, monitor, and configure active financial loops. This includes a **Portfolio Rebalancer** that aligns assets to target risk metrics, a **Tax-Loss Harvesting Bot** that books capital losses to offset short-term capital gains tax while swapping assets to avoid wash-sales, and **Natural Language Guardrails** that translate plain-English rules into background monitors.
 * **Plain-English Wealth Academy & Chat Advisor**: An interactive chatbot backed by Gemini-3.5-flash that answers user queries on alternative assets and compares products side-by-side (e.g., *ETFs vs. Mutual Funds*, *REITs vs. Physical Housing*).
+
+---
+
+## 📐 System Architecture & Workflows
+
+FinBridge separates presentation, orchestration, data aggregation, and compliance into distinct modular layers.
+
+### 1. Overall System Architecture Block Diagram
+
+```mermaid
+graph TD
+    Client[Client UI: React Web / Flutter Mobile] -->|HTTPS REST / JSON| Gateway[API Gateway & Auth: FastAPI]
+    Gateway -->|JWT / OTP Validate| Redis[Cache & Rate-Limit: Redis]
+    Gateway -->|Read/Write Operations| Postgres[(Primary DB: PostgreSQL)]
+    
+    %% Analytics Pipeline
+    Gateway -->|Execute Risk Scoring| RiskEngine[Risk Analytics Engine: XGBoost / Isolation Forest]
+    Gateway -->|SIP & Goal Models| ForecastEngine[Forecasting Engine: Prophet]
+    Gateway -->|Retrieve Advice Context| LLM_RAG[AI RAG Model: Gemini-3.5-flash]
+    
+    %% Data Ingestion
+    Gateway -->|Trigger Data Pull| AA_Connector[AA Connector / Consent Manager]
+    AA_Connector -->|Demat Registry Statements| Depositories[NSDL / CDSL Registries]
+    AA_Connector -->|Holdings & Transactions APIs| Brokers[Zerodha, Groww, Upstox APIs]
+    
+    %% Offline Processes
+    Postgres -->|Read User Portfolios| Spark[Batch Processing: Apache Spark]
+    Spark -->|Update Risk Profiles| Postgres
+```
+
+### 2. Multi-Broker Data Aggregation & Risk Intelligence Workflow
+
+This sequence diagram illustrates how FinBridge fetches fragmented data securely via Account Aggregators and calculates cross-broker sector concentrations that individual brokers cannot detect:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Retail Investor
+    participant App as FinBridge App UI
+    participant Gateway as FastAPI Backend
+    participant AA as Account Aggregator (FIP)
+    participant Risk as Risk Intelligence Engine
+
+    User->>App: Verify Identity (Mobile + PAN)
+    App->>Gateway: Create Consent Request
+    Gateway->>AA: Fetch Registry Demat Holdings via Consent Artifact
+    AA-->>Gateway: Return Normalized Decrypted JSON Statements
+    Gateway->>Gateway: Parse Zerodha, Groww, and Upstox portfolios
+    Gateway->>Risk: Execute Cross-Broker Risk Assessment
+    Risk->>Risk: Sum Sector Exposure (e.g. Zerodha 40% + Groww 45% Tech)
+    Risk-->>Gateway: Flag Concentration Alert (85% Tech Risk)
+    Gateway-->>App: Display Consolidated Dashboard & Flagship Risk Alert
+    App->>User: Expose Hidden Risk Warning Banner
+```
+
+### 3. Suitability-First Recommendation Flow
+
+This workflow illustrates how the suitability engine filters the alternative assets catalog to prevent mis-selling:
+
+```mermaid
+graph LR
+    Start([User opens Discovery tab]) --> Profile[Fill Suitability Profiler: Age, Income, Horizon, Risk Appetite, Goal]
+    Profile --> Score[Scoring Engine calculates matches against REITs, InvITs, and Bonds]
+    Score --> Filter{Check Risk Appetite & Horizon}
+    Filter -->|Low Horizon / High Risk| MatchA[REITs: Match 65% | SGBs: Match 50% | NHAI Bonds: Match 95%]
+    Filter -->|High Horizon / High Risk| MatchB[REITs: Match 95% | InvITs: Match 85% | NHAI Bonds: Match 55%]
+    Score --> Explainer[Generate Plain-English Explanation & Taxation Breakdown]
+    Explainer --> Render[Display Custom Recommendation Cards]
+```
 
 ---
 
@@ -56,6 +125,36 @@ The platform's technical architecture is outlined in the table below:
 | **Batch Processing** | Apache Spark | Portfolio-wide tax auditing, rebalancing computations, and monthly Wealth Health Reports. |
 | **Consent Management** | Account Aggregator (AA) Framework | Regulated, purpose-limited, time-bound, and revocable consent pipelines (FIP / FIU integration). |
 | **Security Standards** | TLS 1.3 & AES-256 | High-grade encryption for data in transit and at rest, coupled with strict read-only demat queries. |
+
+---
+
+## 📁 Codebase Directory Structure
+
+```
+├── assets/                     # Media, banners, and static design resources
+├── dist/                       # Production bundle outputs (HTML, CJS server, assets)
+├── src/
+│   ├── components/
+│   │   ├── AdvancedReports.tsx            # Overlap analyzer, Dynamic Rebalancer, Tax Loss offsets
+│   │   ├── AgenticAIWorkspace.tsx         # Rebalance Agent, Tax Harvest Bot, NLP Guardrails, log terminal
+│   │   ├── AlternateAssetsDiscovery.tsx   # Investor suitability profiler, alternate asset catalog
+│   │   ├── AIConversationalWidget.tsx     # Floating/Embedded RAG-based chat assistant
+│   │   ├── LearnCenter.tsx                # Plain-English Wealth Academy (dictionary, comparison matrix)
+│   │   ├── MetricCard.tsx                 # Dashboard metrics with micro-sparklines
+│   │   ├── PortfolioChart.tsx             # Dynamic SVG/Canvas pie charts showing asset distributions
+│   │   └── InvestmentsCenter.tsx          # Strategic Asset Heatmap & Sector matrix grid
+│   ├── services/
+│   │   └── brokerAggregation.ts           # Mock Account Aggregator API link and sync connectors
+│   ├── App.tsx                            # Core router, onboarding flow container, and layout manager
+│   ├── data.ts                            # Default sandbox portfolio holdings and wealth goals
+│   ├── main.tsx                           # React DOM entrypoint
+│   ├── types.ts                           # Shared interface types for Assets, Goals, AI insights
+│   └── index.css                          # Tailwind CSS base styling
+├── server.ts                   # Express server with mock API fallbacks & Gemini model bindings
+├── package.json                # Project dependencies and build scripts
+├── tsconfig.json               # TypeScript compiler config
+└── vite.config.ts              # Vite asset bundler configuration
+```
 
 ---
 
