@@ -42,6 +42,7 @@ import { LearnCenter } from "./components/LearnCenter";
 import { AdvancedReports } from "./components/AdvancedReports";
 import { InvestmentsCenter } from "./components/InvestmentsCenter";
 import { AgenticAIWorkspace } from "./components/AgenticAIWorkspace";
+import { AlternateAssetsDiscovery } from "./components/AlternateAssetsDiscovery";
 import { BrokerAggregationService, SUPPORTED_BROKERS, SAMPLE_HOLDINGS_BY_BROKER } from "./services/brokerAggregation";
 
 export default function App() {
@@ -822,6 +823,7 @@ export default function App() {
           {[
             { name: "Dashboard", icon: LayoutGrid },
             { name: "Agentic AI", icon: BrainCircuit },
+            { name: "Discovery Center", icon: Building },
             { name: "Profile & Settings", icon: User }
           ].map((item) => {
             const Icon = item.icon;
@@ -916,6 +918,7 @@ export default function App() {
             {[
               { name: "Dashboard", icon: LayoutGrid },
               { name: "Agentic AI", icon: BrainCircuit },
+              { name: "Discovery Center", icon: Building },
               { name: "Profile & Settings", icon: User }
             ].map((item) => {
               const Icon = item.icon;
@@ -1682,6 +1685,13 @@ export default function App() {
                 targetRisk={targetRisk}
                 onTriggerAnalysis={runPortfolioAnalysis}
               />
+            </div>
+          )}
+
+          {/* ==================== VIEW: DISCOVERY CENTER ==================== */}
+          {activeTab === "Discovery Center" && (
+            <div className="animate-fadeIn flex flex-col gap-6" id="view-discovery">
+              <AlternateAssetsDiscovery />
             </div>
           )}
 

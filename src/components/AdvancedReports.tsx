@@ -51,6 +51,45 @@ export const AdvancedReports: React.FC<AdvancedReportsProps> = ({ assets, target
       value: tickerMap[tick].totalVal
     }));
 
+  // 1b. Cross Broker Sector Concentration Overlaps (Invisible Concentration Risk)
+  const sectorBrokerMap: Record<string, Record<string, number>> = {};
+  const sectorTotalMap: Record<string, number> = {};
+
+  assets.forEach((a) => {
+    const sec = a.sector || "Other";
+    if (!sectorBrokerMap[sec]) {
+      sectorBrokerMap[sec] = {};
+    }
+    sectorBrokerMap[sec][a.broker] = (sectorBrokerMap[sec][a.broker] || 0) + a.value;
+    sectorTotalMap[sec] = (sectorTotalMap[sec] || 0) + a.value;
+  });
+
+  const hiddenConcentrationList = Object.keys(sectorTotalMap)
+    .map((sec) => {
+      const totalSecVal = sectorTotalMap[sec];
+      const secPct = totalValue > 0 ? (totalSecVal / totalValue) * 100 : 0;
+
+      const brokersBreakdown = Object.keys(sectorBrokerMap[sec]).map((bName) => {
+        const val = sectorBrokerMap[sec][bName];
+        const pctOfPortfolio = totalValue > 0 ? (val / totalValue) * 100 : 0;
+        return { brokerName: bName, value: val, pctOfPortfolio };
+      });
+
+      // Split if exists in > 1 broker
+      const isSplit = brokersBreakdown.length > 1;
+      // High concentration if combined exceeds 15% (to trigger easily on demo portfolios)
+      const isConcentrated = secPct > 15;
+
+      return {
+        sector: sec,
+        totalPct: secPct,
+        totalVal: totalSecVal,
+        brokersBreakdown,
+        isAlertTriggered: isSplit && isConcentrated
+      };
+    })
+    .filter(item => item.isAlertTriggered);
+
   // 2. Ideal Allocations Based on Risk Plan
   const targetAllocations: Record<string, Record<string, number>> = {
     Conservative: { "Stocks": 30, "Mutual Funds": 40, "Cash Equivalents": 20, "Gold": 10, "Alternatives": 0 },
@@ -198,19 +237,61 @@ export const AdvancedReports: React.FC<AdvancedReportsProps> = ({ assets, target
         {activeReportTab === "overlap" && (
           <div className="flex flex-col gap-4 animate-fadeIn" id="report-overlap">
             <div className="p-3.5 bg-blue-50/55 border border-blue-50 rounded-xl text-xs leading-relaxed">
-              <strong className="text-blue-900 block font-bold mb-0.5">Overlap Analyzer</strong>
-              Holding the identical security in multiple accounts makes portfolio weight evaluation harder. We scanned your Charles Schwab, Fidelity, Robinhood, and Groww positions for overlaps.
+              <strong className="text-blue-900 block font-bold mb-0.5">Cross-Broker Risk Analysis</strong>
+              Holding similar assets or sectors across multiple brokers hides your real aggregate exposure. Individual brokers are blind to this combined concentration.
             </div>
 
+            {/* 1. Flagship Differentiator: Hidden Sector Concentration Warning */}
+            {hiddenConcentrationList.length > 0 && (
+              <div className="flex flex-col gap-3">
+                <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">🚨 Flagship Alert: Hidden Sector Concentrations</div>
+                {hiddenConcentrationList.map((hc, idx) => (
+                  <div key={idx} className="p-4 bg-rose-50 border border-rose-100 rounded-2xl flex flex-col gap-3 shadow-3xs animate-fadeIn">
+                    <div className="flex items-start gap-2.5">
+                      <ShieldAlert className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+                      <div className="text-xs">
+                        <strong className="text-rose-950 font-bold block text-sm">
+                          Dangerously Concentrated {hc.sector} Exposure: {hc.totalPct.toFixed(1)}%
+                        </strong>
+                        <p className="text-rose-800 mt-1 leading-relaxed">
+                          Your exposure to the **{hc.sector}** sector across all accounts combines to a high **{hc.totalPct.toFixed(1)}%** (₹{hc.totalVal.toLocaleString()}). Individually, each broker views your exposure as moderate and safe, but the combined portfolio is highly vulnerable to sector pullbacks.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Breakdown bars */}
+                    <div className="bg-white/80 border border-rose-100/50 rounded-xl p-3 flex flex-col gap-2.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Exposure Breakdown by Broker Account:</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {hc.brokersBreakdown.map((bb, bIdx) => (
+                          <div key={bIdx} className="text-xs">
+                            <div className="flex justify-between font-semibold text-slate-700">
+                              <span>{bb.brokerName}</span>
+                              <span className="font-mono text-slate-900">{bb.pctOfPortfolio.toFixed(1)}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-1">
+                              <div className="bg-rose-500 h-full rounded-full" style={{ width: `${(bb.value / hc.totalVal) * 100}%` }} />
+                            </div>
+                            <span className="text-[9px] text-slate-400 font-medium block mt-0.5">₹{bb.value.toLocaleString()} allocated</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 2. Overlapping Tickers */}
+            <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-1">Identified Overlapping Tickers</div>
             {overlappingTickers.length === 0 ? (
-              <div className="text-center py-12 border border-dashed border-slate-150 rounded-xl bg-slate-50/20">
+              <div className="text-center py-8 border border-dashed border-slate-150 rounded-xl bg-slate-50/20">
                 <CheckCircle className="w-7 h-7 text-emerald-500 mx-auto mb-2" />
-                <span className="text-xs font-bold text-slate-700 block">No Cross-Broker Overlaps</span>
+                <span className="text-xs font-bold text-slate-700 block">No Cross-Broker Ticker Overlaps</span>
                 <p className="text-[11px] text-slate-400 mt-0.5">Each of your stocks is clean and localized to a single broker.</p>
               </div>
             ) : (
               <div className="flex flex-col gap-2.5">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Identified Overlapping Positions</div>
                 {overlappingTickers.map((ov, idx) => (
                   <div key={idx} className="p-3 bg-white border border-slate-100 rounded-xl flex items-center justify-between shadow-3xs hover:border-slate-200 transition-colors">
                     <div>
@@ -223,9 +304,9 @@ export const AdvancedReports: React.FC<AdvancedReportsProps> = ({ assets, target
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono text-xs font-bold text-slate-800">${ov.value.toLocaleString()}</span>
+                      <span className="font-mono text-xs font-bold text-slate-800">₹{ov.value.toLocaleString()}</span>
                       <p className="text-[10px] text-rose-500 font-semibold mt-0.5 flex items-center gap-0.5 justify-end">
-                        <ShieldAlert className="w-3 h-3" />
+                        <ShieldAlert className="w-3.5 h-3.5" />
                         Spread Overlap Risk
                       </p>
                     </div>
