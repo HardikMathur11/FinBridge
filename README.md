@@ -244,3 +244,6 @@ FinBridge is an educational and analytical platform designed to enhance financia
 <p align="center">
   Built by <b>Team investIQ</b>
 </p>
+
+
+
