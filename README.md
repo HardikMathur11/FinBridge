@@ -20,13 +20,13 @@
 
 ---
 
-## 📖 Introduction
+## ✦ Introduction
 
 **FinBridge** is a secure, consent-first portfolio aggregation and investment intelligence platform designed specifically for retail investors in India. Built on top of India's regulated financial infrastructure, FinBridge consolidates an investor's holdings across multiple brokerages, depositories, and asset classes into a single, unified view. By replacing fragmented dashboards with institutional-grade risk analytics and suitability-first alternative asset discovery, FinBridge empowers retail participants to make informed, objective, and compliant investment decisions.
 
 ---
 
-## 🚨 Problem Statement (PS)
+## ✦ Problem Statement (PS)
 
 India's retail investors face two compounding barriers that limit effective participation in securities markets:
 
@@ -37,7 +37,7 @@ These gaps result in an opaque and inequitable investing experience where sophis
 
 ---
 
-## 💡 Solution
+## ✦ Solution
 
 FinBridge resolves these gaps by combining portfolio aggregation, dynamic risk exposure analytics, and conversational intelligence with suitability assessments and plain-language product education.
 
@@ -48,19 +48,19 @@ FinBridge resolves these gaps by combining portfolio aggregation, dynamic risk e
 * **Autonomous AI Agent Workspace**: A sandboxed area allowing users to deploy, monitor, and configure active financial loops. This includes a **Portfolio Rebalancer** that aligns assets to target risk metrics, a **Tax-Loss Harvesting Bot** that books capital losses to offset short-term capital gains tax while swapping assets to avoid wash-sales, and **Natural Language Guardrails** that translate plain-English rules into background monitors.
 * **Plain-English Wealth Academy & Chat Advisor**: An interactive chatbot backed by Gemini-3.5-flash that answers user queries on alternative assets and compares products side-by-side (e.g., *ETFs vs. Mutual Funds*, *REITs vs. Physical Housing*).
 
-### ⚔️ Industry Contrast Matrix
+### ✦ Industry Contrast Matrix
 
 | Traditional Aggregators / Individual Brokers | FinBridge Unified Experience |
 | :--- | :--- |
-| ❌ **Siloed Exposure Views**: Zerodha, Groww, and Upstox operate as blind silos, unaware of external holding balances. | 🌐 **Consolidated Portfolio Intel**: Automatically maps, normalizes, and groups assets across all demat accounts. |
-| ❌ **Hidden Concentration Risks**: Sector exposure is calculated per broker, masking dangerous combined asset allocations. | 🚨 **Cross-Broker Warnings**: Computes overall sector weights and triggers alerts for hidden sector overlaps. |
-| ❌ **Product Catalog Spams**: Promotes alternative assets directly to retail users without suitability or knowledge checks. | 🧬 **Suitability-First Recommendations**: Profiles age, horizon, risk, and goals before displaying matching alternate assets. |
-| ❌ **Comprehension Lag**: Uses complex prospectuses, leaving retail investors vulnerable to mis-selling. | 📖 **Plain-English Wealth Academy**: Simplifies mechanics, taxation, and liquidity rules in simple language. |
-| ❌ **Manual Allocation & Harvest Math**: Forces investors to manually calculate rebalancing amounts and tax-loss offsets. | 🤖 **Autonomous AI Workspace**: Deploys rebalancing, tax-loss harvesting, and NLP guardrail agents. |
+| ⊘ **Siloed Exposure Views**: Zerodha, Groww, and Upstox operate as blind silos, unaware of external holding balances. | ✓ **Consolidated Portfolio Intel**: Automatically maps, normalizes, and groups assets across all demat accounts. |
+| ⊘ **Hidden Concentration Risks**: Sector exposure is calculated per broker, masking dangerous combined asset allocations. | ✓ **Cross-Broker Warnings**: Computes overall sector weights and triggers alerts for hidden sector overlaps. |
+| ⊘ **Product Catalog Spams**: Promotes alternative assets directly to retail users without suitability or knowledge checks. | ✓ **Suitability-First Recommendations**: Profiles age, horizon, risk, and goals before displaying matching alternate assets. |
+| ⊘ **Comprehension Lag**: Uses complex prospectuses, leaving retail investors vulnerable to mis-selling. | ✓ **Plain-English Wealth Academy**: Simplifies mechanics, taxation, and liquidity rules in simple language. |
+| ⊘ **Manual Allocation & Harvest Math**: Forces investors to manually calculate rebalancing amounts and tax-loss offsets. | ✓ **Autonomous AI Workspace**: Deploys rebalancing, tax-loss harvesting, and NLP guardrail agents. |
 
 ---
 
-## 📐 System Architecture & Workflows
+## ✦ System Architecture & Workflows
 
 FinBridge separates presentation, orchestration, data aggregation, and compliance into distinct modular layers.
 
@@ -129,7 +129,7 @@ graph LR
 
 ---
 
-## 🛠 Technology Stack
+## ✦ Technology Stack
 
 The platform's technical architecture is outlined in the table below:
 
@@ -149,7 +149,7 @@ The platform's technical architecture is outlined in the table below:
 
 ---
 
-## 📁 Codebase Directory Structure
+## ✦ Codebase Directory Structure
 
 ```
 ├── assets/                     # Media, banners, and static design resources
@@ -179,7 +179,7 @@ The platform's technical architecture is outlined in the table below:
 
 ---
 
-## 📈 Market Feasibility & Compliance
+## ✦ Market Feasibility & Compliance
 
 FinBridge treats regulatory guidelines as a core design constraint rather than a post-development afterthought:
 
@@ -189,7 +189,7 @@ FinBridge treats regulatory guidelines as a core design constraint rather than a
 
 ---
 
-## 🚀 Running the Sandbox Application Locally
+## ✦ Running the Sandbox Application Locally
 
 To run the application sandbox and explore the unified portfolio dashboard, suitability engine, and autonomous agents:
 
@@ -232,7 +232,7 @@ To run the application sandbox and explore the unified portfolio dashboard, suit
 
 ---
 
-## ⚖️ Disclaimer & Compliance
+## ✦ Disclaimer & Compliance
 
 FinBridge is an educational and analytical platform designed to enhance financial literacy and showcase dynamic multi-broker risk consolidation. 
 * **No Direct Solicitation**: This platform displays investment options (REITs, InvITs, and bonds) with objective, plain-language suitability details and Indian taxation breakdowns for educational purposes. It does not provide direct buy/sell advisories or execute transactions.
