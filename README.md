@@ -1,6 +1,8 @@
 # FinBridge
 ### India's Unified Investment Intelligence Platform
 
+**Developed by Team investIQ**
+
 > **One Identity. Every Investment. Institutional-Grade Clarity for Retail India.**
 >
 > *Developed for Hackathon Problem Statement 3: Super App for Unified Multi Asset Investing and Awareness for Retail Investors.*
